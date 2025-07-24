@@ -1,0 +1,6 @@
+@ThreadAndDaringStore_HostAddress = http://localhost:5065
+
+GET {{ThreadAndDaringStore_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
