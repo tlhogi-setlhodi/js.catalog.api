@@ -1,1 +1,1 @@
-# My-Store-Api
+# My-Store-Catalog-Api
