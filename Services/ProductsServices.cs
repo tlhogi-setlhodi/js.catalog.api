@@ -16,13 +16,17 @@ namespace ThreadAndDaringStore.Services
         // GET all
         public async Task<List<Product>> GetAllAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products
+            .Include(p => p.Category)// this loads the related category data
+            .ToListAsync();
         }
 
         // GET by ID
         public async Task<Product?> GetByIdAsync(int id)
         {
-            return await _context.Products.FindAsync(id);
+            return await _context.Products
+                .Include(p => p.Category)
+                    .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         // CREATE

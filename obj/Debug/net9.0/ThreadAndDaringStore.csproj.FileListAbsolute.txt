@@ -128,3 +128,4 @@ C:\Users\info\ThreadAndDaringStore\obj\Debug\net9.0\refint\ThreadAndDaringStore.
 C:\Users\info\ThreadAndDaringStore\obj\Debug\net9.0\ThreadAndDaringStore.pdb
 C:\Users\info\ThreadAndDaringStore\obj\Debug\net9.0\ThreadAndDaringStore.genruntimeconfig.cache
 C:\Users\info\ThreadAndDaringStore\obj\Debug\net9.0\ref\ThreadAndDaringStore.dll
+C:\Users\info\ThreadAndDaringStore\obj\Debug\net9.0\ThreadAndDaringStore.sourcelink.json

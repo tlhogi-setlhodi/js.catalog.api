@@ -19,7 +19,8 @@ namespace ThreadAndDaringStore.ControllersController
             [FromQuery] string? sortDirection = "asc")
         {
             var products = await _service.GetAllAsync();
-
+             
+                //Sorting and Filtering 
             if (!string.IsNullOrEmpty(search))
                 products = products.Where(p => p.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
 
