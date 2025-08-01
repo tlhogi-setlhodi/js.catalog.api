@@ -2847,19 +2847,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\info\\.nuget\\packages\\": {}
+    "C:\\Users\\Tlhogi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\info\\ThreadAndDaringStore\\ThreadAndDaringStore.csproj",
+      "projectUniqueName": "C:\\Users\\Tlhogi\\Documents\\Projects\\Training\\eJDStore\\My-Store-Api\\ThreadAndDaringStore.csproj",
       "projectName": "ThreadAndDaringStore",
-      "projectPath": "C:\\Users\\info\\ThreadAndDaringStore\\ThreadAndDaringStore.csproj",
-      "packagesPath": "C:\\Users\\info\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\info\\ThreadAndDaringStore\\obj\\",
+      "projectPath": "C:\\Users\\Tlhogi\\Documents\\Projects\\Training\\eJDStore\\My-Store-Api\\ThreadAndDaringStore.csproj",
+      "packagesPath": "C:\\Users\\Tlhogi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Tlhogi\\Documents\\Projects\\Training\\eJDStore\\My-Store-Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\info\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Tlhogi\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -2883,7 +2883,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -2927,7 +2927,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
