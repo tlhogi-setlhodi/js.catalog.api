@@ -1,74 +1,90 @@
 using Microsoft.AspNetCore.Mvc;
 using ThreadAndDaringStore.Models;
 using ThreadAndDaringStore.Services;
+using System.Text.Json;
 
-namespace ThreadAndDaringStore.ControllersController
-{ [ApiController]
+namespace ThreadAndDaringStore.Controllers
+{
+    [ApiController]
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        private readonly ProductService _service;
+        private readonly IProductService _service;
+        private readonly IWebHostEnvironment _environment;
 
-        public ProductController(ProductService service) => _service = service;
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAll(
-            [FromQuery] string? search,
-            [FromQuery] string? category,
-            [FromQuery] string? sortBy,
-            [FromQuery] string? sortDirection = "asc")
+        public ProductController(IProductService service, IWebHostEnvironment environment)
         {
-            var products = await _service.GetAllAsync();
-             
-                //Sorting and Filtering 
-            if (!string.IsNullOrEmpty(search))
-                products = products.Where(p => p.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            _service = service;
+            _environment = environment;
+        }
 
-            if (!string.IsNullOrEmpty(category))
-                products = products.Where(p => p.Category != null && p.Category.Name.Equals(category, StringComparison.OrdinalIgnoreCase)).ToList();
+        // GET: api/product
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var products = await _service.GetProductsAsync();
 
-            products = sortBy?.ToLower() switch
+            var formattedProducts = products.Select(p => new
             {
-                "name" => sortDirection == "desc"
-                    ? products.OrderByDescending(p => p.Name).ToList()
-                    : products.OrderBy(p => p.Name).ToList(),
-                "price" => sortDirection == "desc"
-                    ? products.OrderByDescending(p => p.Price).ToList()
-                    : products.OrderBy(p => p.Price).ToList(),
-                _ => products
+                id = p.Id,
+                name = p.Name,
+                description = p.Description,
+                price = p.Price,
+                currency = "ZAR",
+                vatIncluded = true,
+                vatRate = 15,
+                available = p.Stock > 0,
+                category = p.Category,
+                tags = p.Tags ?? new List<string>(),
+                imageUrl = p.ImageUrl,
+                stock = p.Stock
+            });
+
+            var response = new
+            {
+                products = formattedProducts,
+                total = formattedProducts.Count(),
+                page = 1,
+                pageSize = 10
             };
 
-            return Ok(products);
+            return Ok(response);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetById(int id)
-        {
-            var item = await _service.GetByIdAsync(id);
-            return item == null ? NotFound() : Ok(item);
-        }
-
+        // POST: api/product
         [HttpPost]
-        public async Task<ActionResult<Product>> Add(Product entity)
+        [RequestSizeLimit(10_000_000)] // limit upload size (10MB)
+        public async Task<IActionResult> Post([FromForm] ProductUploadDto dto)
         {
-            var added = await _service.AddAsync(entity);
-            return CreatedAtAction(nameof(GetById), new { id = added.Id }, added);
-        }
+            if (dto.Image == null || dto.Image.Length == 0)
+                return BadRequest("Image file is required.");
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Product entity)
-        {
-            if (id != entity.Id) return BadRequest();
-            var updated = await _service.UpdateAsync(id, entity);
-            return updated == null ? NotFound() : NoContent();
-        }
+            // Save the image
+            var imageFileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.Image.FileName)}";
+            var imagePath = Path.Combine(_environment.WebRootPath, "images", imageFileName);
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var deleted = await _service.DeleteAsync(id);
-            return !deleted ? NotFound() : NoContent();
+            // Ensure the folder exists
+            Directory.CreateDirectory(Path.GetDirectoryName(imagePath)!);
+            using (var stream = new FileStream(imagePath, FileMode.Create))
+            {
+                await dto.Image.CopyToAsync(stream);
+            }
+
+            var product = new Product
+            {
+                Id = dto.ProductCode,
+                Name = dto.Name,
+                Description = dto.Description,
+                Price = dto.Price,
+                Category = dto.Category,
+                Stock = dto.Stock,
+                ImageUrl = $"/images/{imageFileName}",
+                Tags = string.Join(",", dto.Tags ?? new List<string>())
+            };
+
+            var created = await _service.AddProductAsync(product);
+
+            return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
         }
     }
-
 }

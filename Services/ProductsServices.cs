@@ -1,64 +1,45 @@
+using Microsoft.EntityFrameworkCore;
 using ThreadAndDaringStore.Data;
 using ThreadAndDaringStore.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace ThreadAndDaringStore.Services
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
-        private readonly ThreadAndDaringStoreContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public ProductService(ThreadAndDaringStoreContext context)
+        public ProductService(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET all
-        public async Task<List<Product>> GetAllAsync()
+        public async Task<List<ProductDto>> GetProductsAsync()
         {
-            return await _context.Products
-            .Include(p => p.Category)// this loads the related category data
-            .ToListAsync();
+            var products = await _context.Products.ToListAsync();
+
+            return products.Select(p => new ProductDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                Price = p.Price,
+                Currency = p.Currency,
+                VatIncluded = p.VatIncluded,
+                VatRate = p.VatRate,
+                Available = p.Available,
+                Category = p.Category,
+                Tags = p.Tags.Split(',').Select(t => t.Trim()).ToList(),
+                ImageUrl = p.ImageUrl,
+                Stock = p.Stock
+            }).ToList();
         }
 
-        // GET by ID
-        public async Task<Product?> GetByIdAsync(int id)
+        public async Task<Product> AddProductAsync(Product product)
         {
-            return await _context.Products
-                .Include(p => p.Category)
-                    .FirstOrDefaultAsync(p => p.Id == id);
-        }
-
-        // CREATE
-        public async Task<Product> AddAsync(Product entity)
-        {
-            _context.Products.Add(entity);
+            _context.Products.Add(product);
             await _context.SaveChangesAsync();
-            return entity;
-        }
-
-        // UPDATE
-        public async Task<Product?> UpdateAsync(int id, Product updated)
-        {
-            var existing = await _context.Products.FindAsync(id);
-            if (existing == null) return null;
-
-            // map fields here
-            // existing.Field = updated.Field;
-
-            await _context.SaveChangesAsync();
-            return existing;
-        }
-
-        // DELETE
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var entity = await _context.Products.FindAsync(id);
-            if (entity == null) return false;
-
-            _context.Products.Remove(entity);
-            await _context.SaveChangesAsync();
-            return true;
+            return product;
         }
     }
 }
+

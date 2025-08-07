@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Tlhogi\\Documents\\Projects\\Training\\eJDStore\\My-Store-Api\\ThreadAndDaringStore.csproj": {}
+    "C:\\Users\\info\\ThreadAndDaringStore\\ThreadAndDaringStore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Tlhogi\\Documents\\Projects\\Training\\eJDStore\\My-Store-Api\\ThreadAndDaringStore.csproj": {
+    "C:\\Users\\info\\ThreadAndDaringStore\\ThreadAndDaringStore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tlhogi\\Documents\\Projects\\Training\\eJDStore\\My-Store-Api\\ThreadAndDaringStore.csproj",
+        "projectUniqueName": "C:\\Users\\info\\ThreadAndDaringStore\\ThreadAndDaringStore.csproj",
         "projectName": "ThreadAndDaringStore",
-        "projectPath": "C:\\Users\\Tlhogi\\Documents\\Projects\\Training\\eJDStore\\My-Store-Api\\ThreadAndDaringStore.csproj",
-        "packagesPath": "C:\\Users\\Tlhogi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tlhogi\\Documents\\Projects\\Training\\eJDStore\\My-Store-Api\\obj\\",
+        "projectPath": "C:\\Users\\info\\ThreadAndDaringStore\\ThreadAndDaringStore.csproj",
+        "packagesPath": "C:\\Users\\info\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\info\\ThreadAndDaringStore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Tlhogi\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\info\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -38,7 +38,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -61,6 +61,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[9.0.4, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[9.0.3, )"
             }
           },
           "imports": [
@@ -82,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
