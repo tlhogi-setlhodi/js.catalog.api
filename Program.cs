@@ -17,15 +17,13 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Middleware
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseStaticFiles(); // Allow serving images and other static content
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
 app.MapControllers();
 app.Run();
